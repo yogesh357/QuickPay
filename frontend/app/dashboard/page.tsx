@@ -27,6 +27,7 @@ import {
   X,
   CreditCard,
   Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 
 export default function DashboardOverview() {
@@ -237,6 +238,7 @@ export default function DashboardOverview() {
                     <tr className="bg-slate-50/70 border-b border-slate-100 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                       <th className="py-3 px-4">Order ID</th>
                       <th className="py-3 px-4">Amount</th>
+                      <th className="py-3 px-4">Status</th>
                       <th className="py-3 px-4">UPI ID</th>
                       <th className="py-3 px-4">Date & Time</th>
                       <th className="py-3 px-4 text-right">Actions</th>
@@ -253,6 +255,19 @@ export default function DashboardOverview() {
                           <span className="text-[10px] text-slate-400 font-normal ml-1">
                             ({p.amount_paise} paise)
                           </span>
+                        </td>
+                        <td className="py-3.5 px-4">
+                          {p.status === "SUCCESS" ? (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-semibold" title={p.utr ? `UTR: ${p.utr}` : "Verified"}>
+                              <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                              <span>Paid</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-700 text-[11px] font-semibold">
+                              <Clock className="w-3 h-3 text-amber-500" />
+                              <span>Pending</span>
+                            </span>
+                          )}
                         </td>
                         <td className="py-3.5 px-4 font-mono text-slate-600">
                           {p.upi_id}
@@ -343,6 +358,12 @@ export default function DashboardOverview() {
                 <span>UPI ID:</span>
                 <span className="font-mono text-slate-800">
                   {selectedPayment.upi_id}
+                </span>
+              </div>
+              <div className="flex justify-between text-slate-600">
+                <span>Status:</span>
+                <span className={selectedPayment.status === "SUCCESS" ? "font-bold text-emerald-600" : "font-bold text-amber-600"}>
+                  {selectedPayment.status === "SUCCESS" ? (selectedPayment.utr ? `PAID (UTR: ${selectedPayment.utr})` : "PAID") : "PENDING"}
                 </span>
               </div>
               <div className="flex justify-between text-slate-600">

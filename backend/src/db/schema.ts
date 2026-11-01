@@ -23,6 +23,9 @@ export const paymentRequests = pgTable("payment_requests", {
   businessName: varchar("business_name", { length: 255 }).notNull(),
   upiLink: text("upi_link").notNull(),
   qrCode: text("qr_code").notNull(),
+  status: varchar("status", { length: 20 }).default("PENDING").notNull(),
+  utr: varchar("utr", { length: 30 }),
+  paidAt: timestamp("paid_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 

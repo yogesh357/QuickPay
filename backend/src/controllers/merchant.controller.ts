@@ -297,6 +297,9 @@ export async function getMerchantPayments(req: Request, res: Response): Promise<
       business_name: p.businessName,
       upi_link: p.upiLink,
       qr_code: p.qrCode,
+      status: p.status,
+      utr: p.utr,
+      paid_at: p.paidAt,
       created_at: p.createdAt,
     }));
 

@@ -19,6 +19,9 @@ export interface PaymentRequest {
   business_name: string;
   qr_code: string;
   upi_link: string;
+  status: "PENDING" | "SUCCESS" | "FAILED";
+  utr?: string | null;
+  paid_at?: string | null;
   created_at: string;
 }
 
@@ -160,5 +163,46 @@ export async function apiGetPaymentById(id: string): Promise<PaymentRequest> {
   const res = await fetch(`${API_URL}/payments/${id}`);
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || data.error || "Payment not found");
+  return data;
+}
+
+export async function apiGetPaymentStatus(id: string): Promise<{
+  id: string;
+  order_id: string;
+  status: "PENDING" | "SUCCESS" | "FAILED";
+  amount: number;
+  utr?: string | null;
+  paid_at?: string | null;
+}> {
+  const res = await fetch(`${API_URL}/payments/${id}/status`);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || data.error || "Failed to check payment status");
+  return data;
+}
+
+export async function apiVerifyPayment(
+  id: string,
+  utr: string
+): Promise<{ success: boolean; message: string; payment: PaymentRequest }> {
+  const res = await fetch(`${API_URL}/payments/${id}/verify`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ utr }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || data.error || "Failed to verify transaction");
+  return data;
+}
+
+export async function apiSimulatePayment(
+  id: string
+): Promise<{ success: boolean; message: string; payment: PaymentRequest; signature?: string }> {
+  const res = await fetch(`${API_URL}/payments/${id}/simulate-bank-callback`, {
+    method: "POST",
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || data.error || "Failed to simulate transaction");
   return data;
 }

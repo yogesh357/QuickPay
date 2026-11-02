@@ -69,11 +69,11 @@ export default function HostedCheckoutPage() {
           setPayment((prev) =>
             prev
               ? {
-                  ...prev,
-                  status: "SUCCESS",
-                  utr: statusData.utr,
-                  paid_at: statusData.paid_at,
-                }
+                ...prev,
+                status: "SUCCESS",
+                utr: statusData.utr,
+                paid_at: statusData.paid_at,
+              }
               : null
           );
         }
@@ -123,11 +123,11 @@ export default function HostedCheckoutPage() {
         setPayment((prev) =>
           prev
             ? {
-                ...prev,
-                status: "SUCCESS",
-                utr: res.payment.utr,
-                paid_at: res.payment.paid_at,
-              }
+              ...prev,
+              status: "SUCCESS",
+              utr: res.payment.utr,
+              paid_at: res.payment.paid_at,
+            }
             : null
         );
       }
@@ -149,11 +149,11 @@ export default function HostedCheckoutPage() {
         setPayment((prev) =>
           prev
             ? {
-                ...prev,
-                status: "SUCCESS",
-                utr: res.payment.utr,
-                paid_at: res.payment.paid_at,
-              }
+              ...prev,
+              status: "SUCCESS",
+              utr: res.payment.utr,
+              paid_at: res.payment.paid_at,
+            }
             : null
         );
       }
